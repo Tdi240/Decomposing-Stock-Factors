@@ -25,27 +25,26 @@ signal = generate_sample_signal(t)
 # Perform Empirical Mode Decomposition (EMD)
 emd = EMD()
 IMFs = emd(signal)
+fig, axes = plt.subplots(len(IMFs) + 1, 1, figsize=(10, 8), facecolor='none') 
 
-# Plot the original signal and IMFs with transparent background
-plt.figure(figsize=(10, 8), facecolor='none')  # Set figure background to transparent
+# Set transparent background for all subplots
+for ax in axes:
+    ax.set_facecolor('none')  # Make subplot backgrounds transparent
 
 # Plot the original signal
-plt.subplot(len(IMFs) + 1, 1, 1)
-plt.plot(t, signal, label='Original Signal', color='blue', linewidth=3)
-plt.legend()
-plt.title('Original Signal')
+axes[0].plot(t, signal, label='Original Signal', color='blue', linewidth=3)
+axes[0].legend()
+axes[0].set_title('Original Signal')
 
 # Plot each IMF
 for i, imf in enumerate(IMFs):
-    plt.subplot(len(IMFs) + 1, 1, i + 2)
-    plt.plot(t, imf, label=f'IMF {i + 1}', color='orange', linewidth=3)
-    plt.legend()
+    axes[i + 1].plot(t, imf, label=f'IMF {i + 1}', color='orange', linewidth=3)
+    axes[i + 1].legend()
 
 plt.tight_layout()
 
-# Save the plot with a transparent background
-plt.savefig('EMD_plot.png', transparent=True)
+# Save the plot with a fully transparent background
+plt.savefig('EMD_plot.png', transparent=True, bbox_inches='tight', dpi=300)
 
 # Show the plot
 plt.show()
-
