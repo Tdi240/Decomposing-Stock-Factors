@@ -3,9 +3,9 @@
 """
 Created on Tue Mar  4 10:53:05 2025
 
-@author: haerdle
+@author: haerdle, updated by ATG on Wed Mar 5 21:42 2025
 """
-
+!pip install EMD-signal
 import numpy as np
 import matplotlib.pyplot as plt
 from PyEMD import EMD
