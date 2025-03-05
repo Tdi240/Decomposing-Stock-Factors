@@ -1,5 +1,4 @@
-
-
+#!pip install EMD-signal
 import numpy as np
 import matplotlib.pyplot as plt
 import yfinance as yf
@@ -10,10 +9,10 @@ def fetch_stock_data(ticker, start_date, end_date):
     stock_data = yf.download(ticker, start=start_date, end=end_date)
     return stock_data
 
-# Calculate daily returns
+# Calculate daily returns and drop NaNs
 def calculate_returns(stock_data):
-    stock_data['Daily Return'] = stock_data['Adj Close'].pct_change().dropna()
-    return stock_data['Daily Return']
+    stock_data['Daily Return'] = stock_data['Close'].pct_change()  # This introduces NaN in the first row
+    return stock_data['Daily Return'].dropna()
 
 # Perform EMD on the returns
 def perform_emd(returns):
@@ -63,3 +62,4 @@ if __name__ == "__main__":
 
     # Plot the results
     plot_results(returns, IMFs)
+
