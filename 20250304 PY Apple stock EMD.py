@@ -22,24 +22,26 @@ def perform_emd(returns):
 
 # Plot the results
 def plot_results(returns, IMFs):
-    plt.figure(figsize=(12, 10), facecolor='none')  # Transparent background
+    fig, axes = plt.subplots(len(IMFs) + 1, 1, figsize=(12, 10), facecolor='none')  # Transparent figure
+
+    # Set transparent background for all subplots
+    for ax in axes:
+        ax.set_facecolor('none')  # Transparent background for each subplot
 
     # Plot the original returns
-    plt.subplot(len(IMFs) + 1, 1, 1)
-    plt.plot(returns.index, returns, label='Apple Daily Returns', color='blue', linewidth=2.5)
-    plt.legend()
-    plt.title('Apple Daily Returns')
+    axes[0].plot(returns.index, returns, label='Apple Daily Returns', color='blue', linewidth=2.5)
+    axes[0].legend()
+    axes[0].set_title('Apple Daily Returns')
 
     # Plot each IMF
     for i, imf in enumerate(IMFs):
-        plt.subplot(len(IMFs) + 1, 1, i + 2)
-        plt.plot(returns.index, imf, label=f'IMF {i + 1}', color='orange', linewidth=2.5)
-        plt.legend()
+        axes[i + 1].plot(returns.index[:len(imf)], imf, label=f'IMF {i + 1}', color='orange', linewidth=2.5)
+        axes[i + 1].legend()
 
     plt.tight_layout()
 
-    # Save the plot with a transparent background
-    plt.savefig('AAPL_EMD_plot.png', transparent=True)
+    # Save the plot with a fully transparent background
+    plt.savefig('AAPL_EMD_plot.png', transparent=True, bbox_inches='tight', dpi=300)
 
     # Show the plot
     plt.show()
